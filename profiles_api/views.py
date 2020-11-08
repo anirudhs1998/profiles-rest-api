@@ -6,6 +6,8 @@ from profiles_api import models
 from rest_framework.authentication import TokenAuthentication  #Type of auth we use - random token
 #string generated when user logs in, this is added to every request made by users
 
+from rest_framework import filters
+
 from profiles_api import permissions
 
 from rest_framework import viewsets
@@ -132,4 +134,8 @@ class UserProfileViewSet(viewsets.ModelViewSet): #Designed for managing models t
 
     authentication_classes = (TokenAuthentication, ) #mechnism to authenticate
 
-    permission_classes =  (permissions.UpdateOwnProfile,)                              #permission to do all this
+    permission_classes =  (permissions.UpdateOwnProfile,)  #permission to do all this
+
+    filter_backends = (filters.SearchFilter,) #we can add 1 or more filter backends
+
+    search_fields = ('name', 'email', )
