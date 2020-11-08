@@ -10,6 +10,7 @@ router.register('profile',views.UserProfileViewSet) #basename only for viewset w
 
 urlpatterns =  [
     path('hello-view/',views.HelloAPIView.as_view()),
+    path('login/',views.UserLoginApiView.as_view()),
     path('',include(router.urls))  #register = generates a list of urls associated with our viewset and the functions inside it
     #we dont put any prefix to the url in the path. So leave it as ''
 ]
