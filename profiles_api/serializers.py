@@ -41,3 +41,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
             instance.set_password(password)
 
         return super().update(instance,validated_data)
+
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    """Serializes profile feed items"""
+
+    class Meta:
+        model = models.ProfileFeedItem
+        fields = ('id','user_profile','status_text','created_on')
+
+        # Users should not create new user profile while adding feed data. Only authenticated user can be assigned new feed data
+
+        extra_kwargs = {'user_profile':{'read_only': True}}
