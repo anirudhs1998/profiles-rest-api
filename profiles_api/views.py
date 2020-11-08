@@ -2,6 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from profiles_api import serializers
+from profiles_api import models
+from rest_framework.authentication import TokenAuthentication  #Type of auth we use - random token
+#string generated when user logs in, this is added to every request made by users
+
+from profiles_api import permissions
 
 from rest_framework import viewsets
 
@@ -113,3 +118,18 @@ class HelloViewSet(viewsets.ViewSet):
         """Handle removing an object """
 
         return Response({'http_method': 'DELETE'})
+
+
+
+
+
+class UserProfileViewSet(viewsets.ModelViewSet): #Designed for managing models through our api
+    """Handle creating and updating profiles"""
+
+    serializer_class = serializers.UserProfileSerializer
+
+    queryset = models.UserProfile.objects.all() #ViewSet we are going to manager
+
+    authentication_classes = (TokenAuthentication, ) #mechnism to authenticate
+
+    permission_classes =  (permissions.UpdateOwnProfile,)                              #permission to do all this
